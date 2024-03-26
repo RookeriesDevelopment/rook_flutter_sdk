@@ -1,4 +1,5 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:rook_sdk/src/domain/enums/health_permission.dart';
 
 import 'rook_sdk_method_channel.dart';
 
@@ -15,5 +16,5 @@ abstract class RookSdkPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion();
+  Future<void> requestPermissions(HealthPermission healthPermission);
 }

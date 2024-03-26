@@ -1,2 +1,11 @@
-<manifest package="io.tryrook.rook_sdk">
+<manifest package="io.tryrook.rook_sdk"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:name=".permissions.HealthConnectPermissionsActivity"
+            android:theme="@style/HealthConnectTheme" />
+    </application>
 </manifest>
