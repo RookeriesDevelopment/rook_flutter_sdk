@@ -82,33 +82,6 @@ void main() {
     );
 
     test(
-      'GIVEN a Result.success WHEN openHealthConnectSettings THEN complete',
-      () async {
-        final future = platform.openHealthConnectSettings();
-
-        await expectLater(future, completes);
-      },
-    );
-
-    test(
-      'GIVEN a Result.success WHEN checkPermissions THEN complete with expected value',
-      () async {
-        final future = platform.checkPermissions(HCHealthPermission.sleep);
-
-        await expectLater(future, completion(true));
-      },
-    );
-
-    test(
-      'GIVEN a Result.success WHEN requestPermissions THEN complete',
-      () async {
-        final future = platform.requestPermissions(HCHealthPermission.sleep);
-
-        await expectLater(future, completes);
-      },
-    );
-
-    test(
       'GIVEN a Result.success WHEN shouldSyncFor THEN complete with expected value',
       () async {
         final future = platform.shouldSyncFor(
@@ -285,33 +258,6 @@ void main() {
       'GIVEN a Result.exception WHEN syncUserTimeZone throw exception',
       () async {
         final future = platform.syncUserTimeZone();
-
-        await expectLater(future, throwsA(isException));
-      },
-    );
-
-    test(
-      'GIVEN a Result.exception WHEN openHealthConnectSettings THEN throw exception',
-      () async {
-        final future = platform.openHealthConnectSettings();
-
-        await expectLater(future, throwsA(isException));
-      },
-    );
-
-    test(
-      'GIVEN a Result.exception WHEN checkPermissions THEN throw exception',
-      () async {
-        final future = platform.checkPermissions(HCHealthPermission.body);
-
-        await expectLater(future, throwsA(isException));
-      },
-    );
-
-    test(
-      'GIVEN a Result.exception WHEN requestPermissions THEN throw exception',
-      () async {
-        final future = platform.requestPermissions(HCHealthPermission.body);
 
         await expectLater(future, throwsA(isException));
       },
@@ -822,49 +768,6 @@ void main() {
       final future = platform.getUserID();
 
       await expectLater(future, throwsA(isException));
-    });
-  });
-
-  group('MethodChannelRookSdkHealthConnect checkAvailability', () {
-    group('Valid AvailabilityStatusProto value', () {
-      setUp(() {
-        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-            .setMockMethodCallHandler(
-          channel,
-          (message) async {
-            return AvailabilityStatusProto.INSTALLED.value;
-          },
-        );
-      });
-
-      test(
-          'GIVEN the happy path WHEN checkAvailability THEN complete with expected value',
-          () async {
-        final future = platform.checkAvailability();
-
-        await expectLater(future, completion(HCAvailabilityStatus.installed));
-      });
-    });
-
-    group('Invalid AvailabilityStatusProto value', () {
-      setUp(() {
-        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-            .setMockMethodCallHandler(
-          channel,
-          (message) async {
-            return 1000;
-          },
-        );
-      });
-
-      test(
-          'GIVEN the unhappy path WHEN checkAvailability THEN complete with HCAvailabilityStatus.notSupported',
-          () async {
-        final future = platform.checkAvailability();
-
-        await expectLater(
-            future, completion(HCAvailabilityStatus.notSupported));
-      });
     });
   });
 }

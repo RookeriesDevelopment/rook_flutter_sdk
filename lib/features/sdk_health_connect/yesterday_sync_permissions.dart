@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:logging/logging.dart';
 import 'package:rook_flutter_sdk/common/widget/scrollable_scaffold.dart';
+import 'package:rook_sdk/rook_sdk.dart';
 import 'package:rook_sdk_core/rook_sdk_core.dart';
 import 'package:rook_sdk_health_connect/rook_sdk_health_connect.dart';
 
@@ -18,8 +19,6 @@ class YesterdaySyncPermissions extends StatefulWidget {
 
 class _YesterdaySyncPermissionsState extends State<YesterdaySyncPermissions> {
   final Logger logger = Logger('YesterdaySyncPermissions');
-
-  final rookHealthPermissionsManager = HCRookHealthPermissionsManager();
 
   bool androidPermissionsChecked = false;
   bool healthConnectPermissionsChecked = false;
@@ -95,7 +94,7 @@ class _YesterdaySyncPermissionsState extends State<YesterdaySyncPermissions> {
   void openHealthConnect() {
     logger.info('Opening Health Connect...');
 
-    rookHealthPermissionsManager.openHealthConnectSettings().then((_) {
+    RookHealthPermissionsManager.openHealthConnectSettings().then((_) {
       logger.info('Health Connect was opened');
     }).catchError((exception) {
       final error = switch (exception) {

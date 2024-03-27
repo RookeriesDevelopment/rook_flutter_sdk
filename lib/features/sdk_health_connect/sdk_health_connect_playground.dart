@@ -3,6 +3,7 @@ import 'package:logging/logging.dart';
 import 'package:rook_flutter_sdk/common/console_output.dart';
 import 'package:rook_flutter_sdk/common/widget/scrollable_scaffold.dart';
 import 'package:rook_flutter_sdk/common/widget/section_title.dart';
+import 'package:rook_sdk/rook_sdk.dart';
 import 'package:rook_sdk_core/rook_sdk_core.dart';
 import 'package:rook_sdk_health_connect/rook_sdk_health_connect.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,7 +22,6 @@ class _SdkHealthConnectPlaygroundState
     extends State<SdkHealthConnectPlayground> {
   final Logger logger = Logger('SdkHealthConnectPlayground');
 
-  final rookHealthPermissionsManager = HCRookHealthPermissionsManager();
   final rookSummaryManager = HCRookSummaryManager();
   final rookEventManager = HCRookEventManager();
 
@@ -92,11 +92,11 @@ class _SdkHealthConnectPlaygroundState
 
     setState(() => availabilityOutput.append('Checking availability...'));
 
-    rookHealthPermissionsManager.checkAvailability().then((availability) {
+    RookHealthPermissionsManager.checkAvailability().then((availability) {
       final string = switch (availability) {
-        HCAvailabilityStatus.installed =>
+        AvailabilityStatus.installed =>
           'Health Connect is installed! You can skip the next step',
-        HCAvailabilityStatus.notInstalled =>
+        AvailabilityStatus.notInstalled =>
           'Health Connect is not installed. Please download from the Play Store',
         _ =>
           'This device is not compatible with health connect. Please close the app',
@@ -128,8 +128,7 @@ class _SdkHealthConnectPlaygroundState
     setState(() => checkPermissionsOutput
         .append('Checking all permissions (Sleep, Physical and Body)...'));
 
-    rookHealthPermissionsManager
-        .checkPermissions(HCHealthPermission.all)
+    RookHealthPermissionsManager.checkPermissions(HealthPermission.all)
         .then((hasPermissions) {
       final string = hasPermissions
           ? 'All permissions are granted! You can skip the next 2 steps'
@@ -158,8 +157,7 @@ class _SdkHealthConnectPlaygroundState
   void requestPermissions() {
     logger.info('Requesting all permissions...');
 
-    rookHealthPermissionsManager
-        .requestPermissions(HCHealthPermission.all)
+    RookHealthPermissionsManager.requestPermissions(HealthPermission.all)
         .then((_) {
       logger.info('All permissions request sent');
     }).catchError((exception) {
@@ -175,7 +173,7 @@ class _SdkHealthConnectPlaygroundState
   void openHealthConnect() {
     logger.info('Opening Health Connect...');
 
-    rookHealthPermissionsManager.openHealthConnectSettings().then((_) {
+    RookHealthPermissionsManager.openHealthConnectSettings().then((_) {
       logger.info('Health Connect was opened');
     }).catchError((exception) {
       final error = switch (exception) {

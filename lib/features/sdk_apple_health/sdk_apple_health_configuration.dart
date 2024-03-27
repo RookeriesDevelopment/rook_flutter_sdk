@@ -8,6 +8,7 @@ import 'package:rook_flutter_sdk/features/sdk_apple_health/ios_calories_tracker_
 import 'package:rook_flutter_sdk/features/sdk_apple_health/ios_steps_tracker_playground.dart';
 import 'package:rook_flutter_sdk/features/sdk_apple_health/sdk_apple_health_playground.dart';
 import 'package:rook_flutter_sdk/secrets.dart';
+import 'package:rook_sdk/rook_sdk.dart';
 import 'package:rook_sdk_apple_health/rook_sdk_apple_health.dart';
 import 'package:rook_sdk_core/rook_sdk_core.dart';
 
@@ -27,7 +28,6 @@ class _SdkAppleHealthConfigurationState
   final Logger logger = Logger('SdkAppleHealthConfiguration');
 
   final rookConfigurationManager = AHRookConfigurationManager();
-  final rookHealthPermissionsManager = AHRookHealthPermissionsManager();
 
   final ConsoleOutput configurationOutput = ConsoleOutput();
   final ConsoleOutput initializeOutput = ConsoleOutput();
@@ -222,7 +222,8 @@ class _SdkAppleHealthConfigurationState
   void requestPermissions() {
     logger.info('Requesting all permissions...');
 
-    rookHealthPermissionsManager.requestAllPermissions().then((_) {
+    RookHealthPermissionsManager.requestPermissions(HealthPermission.all)
+        .then((_) {
       logger.info('All permissions request sent');
 
       setState(() => enableNavigation = true);

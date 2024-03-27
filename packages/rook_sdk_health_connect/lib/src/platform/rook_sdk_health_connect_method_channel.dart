@@ -4,14 +4,10 @@ import 'package:rook_sdk_core/rook_sdk_core.dart';
 import 'package:rook_sdk_health_connect/src/data/extension/result_boolean_extensions.dart';
 import 'package:rook_sdk_health_connect/src/data/extension/result_int64_extensions.dart';
 import 'package:rook_sdk_health_connect/src/data/extension/result_sync_status_extensions.dart';
-import 'package:rook_sdk_health_connect/src/data/mapper/availability_status_mappers.dart';
 import 'package:rook_sdk_health_connect/src/data/mapper/health_data_type_mappers.dart';
-import 'package:rook_sdk_health_connect/src/data/mapper/health_permission_mappers.dart';
 import 'package:rook_sdk_health_connect/src/data/mapper/rook_configuration_mappers.dart';
 import 'package:rook_sdk_health_connect/src/data/proto/protos.pb.dart';
-import 'package:rook_sdk_health_connect/src/domain/enums/hc_availability_status.dart';
 import 'package:rook_sdk_health_connect/src/domain/enums/hc_health_data_type.dart';
-import 'package:rook_sdk_health_connect/src/domain/enums/hc_health_permission.dart';
 import 'package:rook_sdk_health_connect/src/domain/enums/hc_sync_status.dart';
 import 'package:rook_sdk_health_connect/src/platform/rook_sdk_health_connect_platform_interface.dart';
 
@@ -82,53 +78,6 @@ class MethodChannelRookSdkHealthConnect extends RookSdkHealthConnectPlatform {
     final Uint8List bytes = await methodChannel.invokeMethod(
       'syncUserTimeZone',
     );
-    final result = ResultBooleanProto.fromBuffer(bytes);
-
-    result.unwrap();
-  }
-
-  @override
-  Future<HCAvailabilityStatus> checkAvailability() async {
-    final int code = await methodChannel.invokeMethod('checkAvailability');
-    final proto = AvailabilityStatusProto.valueOf(code) ??
-        AvailabilityStatusProto.NOT_SUPPORTED;
-
-    return proto.toDomain();
-  }
-
-  @override
-  Future<void> openHealthConnectSettings() async {
-    final Uint8List bytes = await methodChannel.invokeMethod(
-      'openHealthConnectSettings',
-    );
-    final result = ResultBooleanProto.fromBuffer(bytes);
-
-    result.unwrap();
-  }
-
-  @override
-  Future<bool> checkPermissions(HCHealthPermission hcHealthPermission) async {
-    final proto = hcHealthPermission.toProto();
-
-    final Uint8List bytes = await methodChannel.invokeMethod(
-      'checkPermissions',
-      [proto.value],
-    );
-
-    final result = ResultBooleanProto.fromBuffer(bytes);
-
-    return result.unwrap();
-  }
-
-  @override
-  Future<void> requestPermissions(HCHealthPermission hcHealthPermission) async {
-    final proto = hcHealthPermission.toProto();
-
-    final Uint8List bytes = await methodChannel.invokeMethod(
-      'requestPermissions',
-      [proto.value],
-    );
-
     final result = ResultBooleanProto.fromBuffer(bytes);
 
     result.unwrap();
