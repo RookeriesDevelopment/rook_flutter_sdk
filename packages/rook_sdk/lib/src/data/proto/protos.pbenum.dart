@@ -32,5 +32,22 @@ class HealthPermissionProto extends $pb.ProtobufEnum {
   const HealthPermissionProto._($core.int v, $core.String n) : super(v, n);
 }
 
+class AvailabilityStatusProto extends $pb.ProtobufEnum {
+  static const AvailabilityStatusProto INSTALLED = AvailabilityStatusProto._(0, _omitEnumNames ? '' : 'INSTALLED');
+  static const AvailabilityStatusProto NOT_INSTALLED = AvailabilityStatusProto._(1, _omitEnumNames ? '' : 'NOT_INSTALLED');
+  static const AvailabilityStatusProto NOT_SUPPORTED = AvailabilityStatusProto._(2, _omitEnumNames ? '' : 'NOT_SUPPORTED');
+
+  static const $core.List<AvailabilityStatusProto> values = <AvailabilityStatusProto> [
+    INSTALLED,
+    NOT_INSTALLED,
+    NOT_SUPPORTED,
+  ];
+
+  static final $core.Map<$core.int, AvailabilityStatusProto> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static AvailabilityStatusProto? valueOf($core.int value) => _byValue[value];
+
+  const AvailabilityStatusProto._($core.int v, $core.String n) : super(v, n);
+}
+
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

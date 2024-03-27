@@ -11,6 +11,12 @@ enum HealthPermissionProto {
   ALL = 3;
 }
 
+enum AvailabilityStatusProto {
+  INSTALLED = 0;
+  NOT_INSTALLED = 1;
+  NOT_SUPPORTED = 2;
+}
+
 message DeviceNotSupportedExceptionProto {
   string message = 1;
 }

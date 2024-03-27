@@ -123,7 +123,9 @@ public final class ProtobufModels {
       "(\0132(.MissingAndroidPermissionsExceptionP" +
       "rotoH\000B\010\n\006result*C\n\025HealthPermissionProt" +
       "o\022\t\n\005SLEEP\020\000\022\014\n\010PHYSICAL\020\001\022\010\n\004BODY\020\002\022\007\n\003" +
-      "ALL\020\003B-\n\031io.tryrook.rook_sdk.protoB\016Prot" +
+      "ALL\020\003*N\n\027AvailabilityStatusProto\022\r\n\tINST" +
+      "ALLED\020\000\022\021\n\rNOT_INSTALLED\020\001\022\021\n\rNOT_SUPPOR" +
+      "TED\020\002B-\n\031io.tryrook.rook_sdk.protoB\016Prot" +
       "obufModelsP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor

@@ -15,6 +15,14 @@ import io.flutter.plugin.common.MethodChannel
 import io.tryrook.rook_sdk.proto.GenericExceptionProto
 import io.tryrook.rook_sdk.proto.ResultBooleanProto
 
+fun MethodChannel.Result.intSuccess(int: Int) {
+    success(int)
+}
+
+fun MethodChannel.Result.throwableError(throwable: Throwable) {
+    error(GENERIC_ERROR_CODE, throwable.message, null)
+}
+
 fun MethodChannel.Result.resultBooleanSuccess(boolean: Boolean) {
     val result = ResultBooleanProto.newBuilder()
         .setSuccess(boolean)
@@ -119,3 +127,5 @@ fun MethodChannel.Result.resultBooleanError(throwable: Throwable) {
 
     success(bytes)
 }
+
+private const val GENERIC_ERROR_CODE = "-1"

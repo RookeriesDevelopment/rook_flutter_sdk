@@ -1,4 +1,5 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:rook_sdk/src/domain/enums/availability_status.dart';
 import 'package:rook_sdk/src/domain/enums/health_permission.dart';
 
 import 'rook_sdk_method_channel.dart';
@@ -15,6 +16,12 @@ abstract class RookSdkPlatform extends PlatformInterface {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }
+
+  Future<AvailabilityStatus> checkAvailability();
+
+  Future<void> openHealthConnectSettings();
+
+  Future<bool> checkPermissions(HealthPermission healthPermission);
 
   Future<void> requestPermissions(HealthPermission healthPermission);
 }

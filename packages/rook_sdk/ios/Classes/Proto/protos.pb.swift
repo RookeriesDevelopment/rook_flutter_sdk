@@ -68,6 +68,50 @@ extension HealthPermissionProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+enum AvailabilityStatusProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case installed // = 0
+  case notInstalled // = 1
+  case notSupported // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .installed
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .installed
+    case 1: self = .notInstalled
+    case 2: self = .notSupported
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .installed: return 0
+    case .notInstalled: return 1
+    case .notSupported: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension AvailabilityStatusProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [AvailabilityStatusProto] = [
+    .installed,
+    .notInstalled,
+    .notSupported,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct DeviceNotSupportedExceptionProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -386,6 +430,7 @@ struct ResultBooleanProto {
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension HealthPermissionProto: @unchecked Sendable {}
+extension AvailabilityStatusProto: @unchecked Sendable {}
 extension DeviceNotSupportedExceptionProto: @unchecked Sendable {}
 extension HealthConnectNotInstalledExceptionProto: @unchecked Sendable {}
 extension HttpRequestExceptionProto: @unchecked Sendable {}
@@ -409,6 +454,14 @@ extension HealthPermissionProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "PHYSICAL"),
     2: .same(proto: "BODY"),
     3: .same(proto: "ALL"),
+  ]
+}
+
+extension AvailabilityStatusProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "INSTALLED"),
+    1: .same(proto: "NOT_INSTALLED"),
+    2: .same(proto: "NOT_SUPPORTED"),
   ]
 }
 

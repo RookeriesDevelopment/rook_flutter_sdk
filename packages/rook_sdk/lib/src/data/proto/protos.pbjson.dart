@@ -29,6 +29,21 @@ final $typed_data.Uint8List healthPermissionProtoDescriptor = $convert.base64Dec
     'ChVIZWFsdGhQZXJtaXNzaW9uUHJvdG8SCQoFU0xFRVAQABIMCghQSFlTSUNBTBABEggKBEJPRF'
     'kQAhIHCgNBTEwQAw==');
 
+@$core.Deprecated('Use availabilityStatusProtoDescriptor instead')
+const AvailabilityStatusProto$json = {
+  '1': 'AvailabilityStatusProto',
+  '2': [
+    {'1': 'INSTALLED', '2': 0},
+    {'1': 'NOT_INSTALLED', '2': 1},
+    {'1': 'NOT_SUPPORTED', '2': 2},
+  ],
+};
+
+/// Descriptor for `AvailabilityStatusProto`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List availabilityStatusProtoDescriptor = $convert.base64Decode(
+    'ChdBdmFpbGFiaWxpdHlTdGF0dXNQcm90bxINCglJTlNUQUxMRUQQABIRCg1OT1RfSU5TVEFMTE'
+    'VEEAESEQoNTk9UX1NVUFBPUlRFRBAC');
+
 @$core.Deprecated('Use deviceNotSupportedExceptionProtoDescriptor instead')
 const DeviceNotSupportedExceptionProto$json = {
   '1': 'DeviceNotSupportedExceptionProto',
