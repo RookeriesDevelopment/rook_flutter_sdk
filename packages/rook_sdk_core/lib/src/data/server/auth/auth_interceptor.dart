@@ -20,7 +20,7 @@ class AuthInterceptor extends Interceptor {
       options.headers[_acceptHeader] = _accept;
 
       return handler.next(options);
-    } catch (e) {
+    } catch (error) {
       return handler.next(options);
     }
   }
@@ -34,9 +34,9 @@ class AuthInterceptor extends Interceptor {
         return handler.next(err);
       }
 
-      try {
-        retryCount++;
+      retryCount++;
 
+      try {
         final token = await authorizer.getOrRefreshToken();
 
         final options = err.requestOptions;
@@ -51,7 +51,20 @@ class AuthInterceptor extends Interceptor {
 
         return handler.resolve(response);
       } catch (exception) {
-        return handler.next(err);
+        if (exception is DioException) {
+          exception.requestOptions.extra[_retryCountKey] = retryCount;
+
+          return handler.next(exception);
+        }
+
+        final newException = DioException(
+          requestOptions: err.requestOptions,
+          error: exception,
+        );
+
+        newException.requestOptions.extra[_retryCountKey] = retryCount;
+
+        return handler.next(newException);
       }
     }
 

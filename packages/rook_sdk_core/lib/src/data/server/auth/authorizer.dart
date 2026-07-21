@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:rook_sdk_core/src/data/server/auth/get_basic_auth.dart';
 import 'package:rook_sdk_core/src/data/server/util/get_api_url_from_environment.dart';
@@ -14,6 +16,14 @@ final class Authorizer {
 
   Token? _token;
   Future<Token>? _ongoingRefresh;
+
+  String get _xPlatform {
+    if (Platform.isIOS) {
+      return _xPlatformIos;
+    } else {
+      return _xPlatformAndroid;
+    }
+  }
 
   Authorizer({
     required String id,
@@ -223,4 +233,5 @@ const String _acceptHeader = "Accept";
 const String _accept = "application/json";
 
 const String _xPlatformHeader = "X-Platform";
-const String _xPlatform = "android";
+const String _xPlatformAndroid = "android";
+const String _xPlatformIos = "ios";
