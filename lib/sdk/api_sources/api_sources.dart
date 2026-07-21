@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:rook_flutter_sdk/core/domain/utils/console_output.dart';
@@ -21,7 +23,7 @@ class _ApiSourcesState extends State<ApiSources> {
   late final RookApiSources rookApiSources = RookApiSources(
     clientUUID: Secrets.clientUUID,
     secret: Secrets.secret,
-    appId: Secrets.packageName,
+    appId: Platform.isIOS ? Secrets.bundleId : Secrets.packageName,
     environment: RookEnvironment.sandbox,
     enableLogs: true,
   );
@@ -164,9 +166,11 @@ class _ApiSourcesState extends State<ApiSources> {
         );
       });
     } catch (exception) {
-      authorizedDataSourcesV2Output.append(
-        "Failed to get authorized data sources v2: $exception",
-      );
+      setState(() {
+        authorizedDataSourcesV2Output.append(
+          "Failed to get authorized data sources v2: $exception",
+        );
+      });
     }
   }
 
