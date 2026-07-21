@@ -1,3 +1,7 @@
+## 4.1.1
+
+* Fixed wrong X-Platform header value on IOS.
+
 ## 4.1.0
 
 ### New Features
